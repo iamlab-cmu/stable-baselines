@@ -36,7 +36,7 @@ class AbstractEnvRunner(ABC):
         self.continue_training = True
         self.n_envs = n_envs
 
-    def run(self, callback: Optional[BaseCallback] = None) -> Any:
+    def run(self, callback: Optional[BaseCallback] = None, index_to_learn=None) -> Any:
         """
         Collect experience.
 
@@ -45,7 +45,7 @@ class AbstractEnvRunner(ABC):
         """
         self.callback = callback
         self.continue_training = True
-        return self._run()
+        return self._run(index_to_learn=index_to_learn)
 
     @abstractmethod
     def _run(self) -> Any:

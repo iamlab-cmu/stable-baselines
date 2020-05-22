@@ -300,7 +300,7 @@ class PPO2(ActorCriticRLModel):
         return policy_loss, value_loss, policy_entropy, approxkl, clipfrac
 
     def learn(self, total_timesteps, callback=None, log_interval=1, tb_log_name="PPO2",
-              reset_num_timesteps=True):
+              reset_num_timesteps=True, index_to_learn=None, all_models = None):
         # Transform to callable if needed
         self.learning_rate = get_schedule_fn(self.learning_rate)
         self.cliprange = get_schedule_fn(self.cliprange)
@@ -333,7 +333,7 @@ class PPO2(ActorCriticRLModel):
 
                 callback.on_rollout_start()
                 # true_reward is the reward without discount
-                rollout = self.runner.run(callback)
+                rollout = self.runner.run(callback, index_to_learn=index_to_learn)
                 # Unpack
                 obs, returns, masks, actions, values, neglogpacs, states, ep_infos, true_reward = rollout
 
@@ -450,7 +450,7 @@ class Runner(AbstractEnvRunner):
         self.lam = lam
         self.gamma = gamma
 
-    def _run(self):
+    def _run(self, index_to_learn=None):
         """
         Run a learning step of the model
 
@@ -479,7 +479,10 @@ class Runner(AbstractEnvRunner):
             # Clip the actions to avoid out of bound error
             if isinstance(self.env.action_space, gym.spaces.Box):
                 clipped_actions = np.clip(actions, self.env.action_space.low, self.env.action_space.high)
-            self.obs[:], rewards, self.dones, infos = self.env.step(clipped_actions)
+            if index_to_learn is not None:
+                self.obs[:], rewards, self.dones, infos = self.env.step(clipped_actions, index_to_learn=index_to_learn, obs=self.obs.copy(), states=self.states, dones = self.dones)
+            else:
+                self.obs[:], rewards, self.dones, infos = self.env.step(clipped_actions)
 
             self.model.num_timesteps += self.n_envs
 
