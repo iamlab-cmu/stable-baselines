@@ -86,9 +86,15 @@ Here is a quick example of how to train and run PPO2 on a cartpole environment:
 ```python
 import gym
 
+<<<<<<< HEAD
 from stable_baselines_custom.common.policies import MlpPolicy
 from stable_baselines_custom.common.vec_env import DummyVecEnv
 from stable_baselines_custom import PPO2
+=======
+from stable_baselines.common.policies import MlpPolicy
+from stable_baselines.common.vec_env import DummyVecEnv
+from stable_baselines import PPO2
+>>>>>>> a7ad1e3098f241134f227c0b168eff4aa2a61cfd
 
 env = gym.make('CartPole-v1')
 # Optional: PPO2 requires a vectorized environment to run
@@ -108,18 +114,30 @@ for i in range(1000):
 Or just train a model with a one liner if [the environment is registered in Gym](https://github.com/openai/gym/wiki/Environments) and if [the policy is registered](https://stable-baselines.readthedocs.io/en/master/guide/custom_policy.html):
 
 ```python
+<<<<<<< HEAD
 from stable_baselines_custom import PPO2
+=======
+from stable_baselines import PPO2
+>>>>>>> a7ad1e3098f241134f227c0b168eff4aa2a61cfd
 
 model = PPO2('MlpPolicy', 'CartPole-v1').learn(10000)
 ```
 
 """
 
+<<<<<<< HEAD
 setup(name='stable_baselines_custom',
       packages=[package for package in find_packages()
                 if package.startswith('stable_baselines_custom')],
       package_data={
           'stable_baselines_custom': ['py.typed', 'version.txt'],
+=======
+setup(name='stable_baselines',
+      packages=[package for package in find_packages()
+                if package.startswith('stable_baselines')],
+      package_data={
+          'stable_baselines': ['py.typed', 'version.txt'],
+>>>>>>> a7ad1e3098f241134f227c0b168eff4aa2a61cfd
       },
       install_requires=[
           'gym[atari,classic_control]>=0.11',

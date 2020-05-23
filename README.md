@@ -108,9 +108,9 @@ Here is a quick example of how to train and run PPO2 on a cartpole environment:
 ```python
 import gym
 
-from stable_baselines_custom.common.policies import MlpPolicy
-from stable_baselines_custom.common.vec_env import DummyVecEnv
-from stable_baselines_custom import PPO2
+from stable_baselines.common.policies import MlpPolicy
+from stable_baselines.common.vec_env import DummyVecEnv
+from stable_baselines import PPO2
 
 env = gym.make('CartPole-v1')
 # Optional: PPO2 requires a vectorized environment to run
@@ -132,7 +132,7 @@ env.close()
 Or just train a model with a one liner if [the environment is registered in Gym](https://github.com/openai/gym/wiki/Environments) and if [the policy is registered](https://stable-baselines.readthedocs.io/en/master/guide/custom_policy.html):
 
 ```python
-from stable_baselines_custom import PPO2
+from stable_baselines import PPO2
 
 model = PPO2('MlpPolicy', 'CartPole-v1').learn(10000)
 ```
@@ -146,9 +146,8 @@ All the following examples can be executed online using Google colab notebooks:
 
 - [Full Tutorial](https://github.com/araffin/rl-tutorial-jnrr19)
 - [All Notebooks](https://github.com/Stable-Baselines-Team/rl-colab-notebooks)
-- [Getting Started](https://colab.research.google.com/github/Stable-Baselines-Team/rl-colab-notebooks/blob/master/stable_baselines_custom.getting_started.ipynb)
-- [Training, Saving, Loading](https://colab.research.google.com/github/Stable-Baselines-Team/rl-colab-notebooks/blob/master/saving_loading_dqn.ipynb)
-- [Multiprocessing](https://colab.research.google.com/github/Stable-Baselines-Team/rl-colab-notebooks/blob/master/multiprocessing_rl.ipynb)
+- [Getting Started](https://colab.research.google.com/github/Stable-Baselines-Team/rl-colab-notebooks/blob/master/stable_baselines_getting_started.ipynb)
+- [Training, Saving, Loading](https://colab.research.google.com/github/Stable-Baselines-Team/rl-colab-notebooks/blob/master/saving_loading_dqn.ipynb) - [Multiprocessing](https://colab.research.google.com/github/Stable-Baselines-Team/rl-colab-notebooks/blob/master/multiprocessing_rl.ipynb)
 - [Monitor Training and Plotting](https://colab.research.google.com/github/Stable-Baselines-Team/rl-colab-notebooks/blob/master/monitor_training.ipynb)
 - [Atari Games](https://colab.research.google.com/github/Stable-Baselines-Team/rl-colab-notebooks/blob/master/atari_games.ipynb)
 - [RL Baselines Zoo](https://colab.research.google.com/github/Stable-Baselines-Team/rl-colab-notebooks/blob/master/rl-baselines-zoo.ipynb)
