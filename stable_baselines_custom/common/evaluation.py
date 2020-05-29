@@ -27,6 +27,11 @@ def evaluate_policy(model, env, n_eval_episodes=10, deterministic=True,
     """
     if isinstance(env, VecEnv):
         assert env.num_envs == 1, "You must pass only one environment when using this function"
+    if isinstance(model, (list, np.array)):
+        models = model
+        separate_policies = True
+    else:
+        separate_policies = False
 
     episode_rewards, episode_lengths = [], []
     for _ in range(n_eval_episodes):
@@ -35,7 +40,14 @@ def evaluate_policy(model, env, n_eval_episodes=10, deterministic=True,
         episode_reward = 0.0
         episode_length = 0
         while not done:
-            action, state = model.predict(obs, state=state, deterministic=deterministic)
+            if separate_policies:
+                actions = []
+                for model in models:
+                    action, state = model.predict(obs, state=state, deterministic=deterministic)
+                    actions.append(action)
+                action = np.stack(actions, axis=1)
+            else:
+                action, state = model.predict(obs, state=state, deterministic=deterministic)
             obs, reward, done, _info = env.step(action)
             episode_reward += reward
             if callback is not None:
